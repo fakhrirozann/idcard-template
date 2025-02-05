@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company ID Card Simulator</title>
+    <title>Company ID Card Form & Simulator</title>
     <style>
         /* General Body Styles */
         body {
@@ -71,7 +71,7 @@
             padding: 12px 20px;
             font-size: 16px;
             font-weight: 500;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: block;
@@ -99,12 +99,11 @@
 
         .card-deck {
             height: fit-content;
-            width:100%;
+            width:100;
             display: flex;
             flex-direction: row;
             justify-content:center;
             gap: 10px;
-            padding-top: 3rem;
             border-radius: 3rem;
         }
         
@@ -132,6 +131,7 @@
         #id-name-b, #id-title-b, #id-department-b {
             position: absolute;
             color: white;
+            font-family: Arial, sans-serif;
             white-space: pre-wrap; /* Preserve line breaks */
             word-wrap: break-word;
             max-width: 80%;
@@ -166,12 +166,21 @@
             font-size: 14px;
         }
 
+        #footer-text  {
+            position: fixed;
+            bottom: 2%; }
+
+        a {}
+
     </style>
 </head>
 <body>
     
     <div class="container">
-        <h2>Simulasikan Nama untuk ID Card Anda</h2>
+        <h2>ID Card Form & Preview</h2>
+        <p style="font-size:12px" > ISI DENGAN NAMA ANDA SERTA SESUAIKAN DENGAN TAMPILAN YANG TERSEDIA  </p>
+
+
         
         <form id="id-card-form" onsubmit="submitForm(event)">
             <div class="form-group">
@@ -188,9 +197,34 @@
                 <label for="department">Job Title (Jabatan):</label>
                 <textarea id="department" name="department" placeholder="Chief Executive Officer" required oninput="updateIDCard()"></textarea>
             </div>
-            
+            <p  style="font-size:12px">Kartu akan terdiri dari dua sisi dengan design tiap sisi seperti berikut: </p>
+            <!-- <p  style="font-size:12px">kartu akan terdiri dari dua sisi dengan design tiap sisi seperti berikut: </p> -->
+
+            <div class="card-deck">
+                <div style="align-items: center;">
+                    <p  style="font-size:12px">Side A</p>
+                </div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>
+                <div><p  style="font-size:12px"> </p></div>           
+                <div><p  style="font-size:12px"> </p></div>
+                <div>
+                    <p  style="font-size:12px">Side B</p>
+                </div>
+            </div>
+                
+
             <div class="card-deck">   
                 <!-- First ID Card -->
+
                 <div class="id-card">
                     <img src="Asset-3sjgr-idcard.svg"/>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
@@ -211,16 +245,18 @@
                     <div id="id-title-b">Sudiyono</div>
                     <div id="id-department-b">Chief Executive<br>Officer</div>
                 </div>
+                
             </div> 
 
             <button type="submit">Submit</button>
             <p id="loading" class="loading">Submitting your data...</p>
-
         </form>
         
-
-    
-    </div>
+        
+        
+        
+    </div>    
+    <p id="footer-text" style="font-size:10px">©2025 Made for <a href="https://sudijayagroup.com">Sudi Jaya Group</a> </p>
 
     <script>
 
