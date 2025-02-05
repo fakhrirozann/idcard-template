@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company ID Card Simulator</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #a5a5a5;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h2 {    
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 250px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .card-deck {
+            height: fit-content;
+            width: 84vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            gap: 10px;
+            padding-top: 3rem;
+            /* padding-block: 6rem; */
+            border-radius: 3rem;
+        }
+        
+        /* ID Card Styling */
+        .id-card {
+            width: 156px; /* Adjust width for vertical layout */
+            height: 242px; /* Adjust height for vertical layout */
+            margin-top: 20px;
+            display: flex;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* ID Card Styling */
+        .id-card-b {
+            width: 156px; /* Adjust width for vertical layout */
+            height: 242px; /* Adjust height for vertical layout */
+            margin-top: 20px;
+            display: flex;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        /* The SVG background */
+        .id-card-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Position the name, job title, and department text over the ID card */
+        #id-name, #id-title, #id-department {
+            position: absolute;
+            right: 10%; /* Align text to the left */
+            transform: translateX(0); /* Ensure text is not centered */
+            color: white;
+        }
+
+        #id-name {
+            top: 29%; /* Adjust top position for name */
+            font-size: 14px;
+            font-weight: Lighter;
+        }
+
+        #id-title {
+            top: 35.7%; /* Adjust top position for job title */
+            font-size: 10px;
+            font-family: "roboto";
+            font-weight: bold;
+        }
+
+        #id-department {
+            top: 43%; /* Adjust top position for department */
+            font-family: "roboto";
+            font-size: 7px;
+            font-weight: lighter;
+        }
+
+
+
+
+
+
+        .id-card-b #id-name, #id-title, #id-department {
+            position: absolute;
+            left: 10%; /* Align text to the left */
+            transform: translateX(0); /* Ensure text is not centered */
+            color: white; 
+            
+        }
+
+        .id-card-b #id-name {
+            top: 29%; /* Adjust top position for name */
+            font-size: 14px;
+            font-weight: Lighter;
+        }
+
+        .id-card-b #id-title {
+            top: 35.7%; /* Adjust top position for job title */
+            font-size: 10px;
+            font-family: "roboto";
+            font-weight: bold;
+        }
+
+        .id-card-b #id-department {
+            top: 43%; /* Adjust top position for department */
+            font-family: "roboto";
+            font-size: 7px;
+            font-weight: lighter;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>SImulasikan Nama untuk Id Card anda</h2>
+        
+        <!-- Form for users to input their name, job title, and department -->
+        <form id="id-card-form">
+            <label for="name">Nama Baris Pertama:</label><br>
+            <input type="text" id="name" name="name" placeholder="William" oninput="updateIDCard()"><br>
+
+            <label for="title">Nama Baris Kedua</label><br>
+            <input type="text" id="title" name="title" placeholder="Sudiono" oninput="updateIDCard()"><br>
+
+            <label for="department">Job Title (Jabatan)</label><br>
+            <input type="text" id="department" name="department" placeholder="Chief Executif Officer" oninput="updateIDCard()"><br>
+        </form>
+
+        <!-- The simulated ID Card -->
+        <div class="card-deck">   
+            <div class="id-card">
+                <img src="Asset-3sjgr-idcard.svg"/>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
+                    <!-- Background of the ID Card (using a rectangle for illustration) -->
+                    <rect width="100%" height="100%" rx="10" ry="15" fill="#090a0a"/>
+                </svg>
+                <!-- Display fields: Name, Job Title, and Department -->
+                <div id="id-name">William</div>
+                <div id="id-title">Sudiono</div>
+                <div id="id-department">Chief Operating Officer</div>
+            </div>
+            
+            <div class="id-card-b">
+                <img src="sjgr-idcard-side-B.svg"/>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
+                    <!-- Background of the ID Card (using a rectangle for illustration) -->
+                    <rect width="100%" height="100%" rx="15" ry="15" fill="#090a0a"/>
+                </svg>
+                <!-- Display fields: Name, Job Title, and Department -->
+                <div id="id-name">William</div>
+                <div id="id-title">Sudiono</div>
+                <div id="id-department">Chief Operating Officer</div>
+            </div>
+        </div> 
+    </div>
+
+    <script>
+        // Function to update the ID card with the name, job title, and department entered by the user
+        function updateIDCard() {
+            const name = document.getElementById('name').value;
+            const title = document.getElementById('title').value;
+            const department = document.getElementById('department').value;
+
+            const nameDisplay = document.getElementById('id-name');
+            const titleDisplay = document.getElementById('id-title');
+            const departmentDisplay = document.getElementById('id-department');
+
+            // Update the displayed fields, using default text if no input is given
+            nameDisplay.textContent = name.trim() !== '' ? name : 'William';
+            titleDisplay.textContent = title.trim() !== '' ? title : 'Sudiono';
+            departmentDisplay.textContent = department.trim() !== '' ? department : 'Job Title';
+        }
+    </script>
+</body>
+</html>
