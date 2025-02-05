@@ -7,68 +7,119 @@
     <style>
         /* General Body Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #a5a5a5;
+            background-color: #f5f5f7;
         }
 
         .container {
             text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         h2 {    
             font-size: 24px;
+            font-weight: 600;
             margin-bottom: 20px;
+            color: #1d1d1f;
         }
 
         form {
             margin-bottom: 20px;
+            width: 100%;
         }
 
-        input[type="text"] {
-            padding: 8px;
-            width: 250px;
+        /* Apple-style input fields */
+        input[type="text"], textarea {
+            width: 90%;
+            padding: 12px;
             font-size: 16px;
+            border: 1px solid #d1d1d6;
+            border-radius: 10px;
+            background: #f9f9f9;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            background: white;
+            border-color: #0071e3;
+            box-shadow: 0 0 8px rgba(0, 113, 227, 0.3);
+        }
+
+        textarea {
+            resize: none;
+            height: 60px;
+        }
+
+        /* Apple-inspired button */
+        button {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0 auto;
+        }
+
+        button:hover {
+            background: #005bb5;
+        }
+
+        /* Form Container */
+        .form-group {
+            text-align: left;
             margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+            padding-left: 2rem;
         }
 
         .card-deck {
             height: fit-content;
-            width: 84vw;
+            width:100%;
             display: flex;
             flex-direction: row;
-            justify-content: space-evenly;
+            justify-content:center;
             gap: 10px;
             padding-top: 3rem;
-            /* padding-block: 6rem; */
             border-radius: 3rem;
         }
         
         /* ID Card Styling */
-        .id-card {
-            width: 156px; /* Adjust width for vertical layout */
-            height: 242px; /* Adjust height for vertical layout */
-            margin-top: 20px;
+        .id-card, .id-card-b {
+            width: min(156px, 45%); /* Keeps proper aspect ratio */
+            height: auto; /* Keeps the aspect ratio */
             display: flex;
             position: relative;
             border-radius: 10px;
             overflow: hidden;
+            aspect-ratio: 156 / 242; /* Ensures the aspect ratio remains */
         }
 
-        /* ID Card Styling */
-        .id-card-b {
-            width: 156px; /* Adjust width for vertical layout */
-            height: 242px; /* Adjust height for vertical layout */
-            margin-top: 20px;
-            display: flex;
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+
         /* The SVG background */
         .id-card-background {
             width: 100%;
@@ -77,128 +128,166 @@
         }
 
         /* Position the name, job title, and department text over the ID card */
-        #id-name, #id-title, #id-department {
+        #id-name, #id-title, #id-department,
+        #id-name-b, #id-title-b, #id-department-b {
             position: absolute;
-            right: 10%; /* Align text to the left */
-            transform: translateX(0); /* Ensure text is not centered */
             color: white;
+            white-space: pre-wrap; /* Preserve line breaks */
+            word-wrap: break-word;
+            max-width: 80%;
         }
 
-        #id-name {
-            top: 29%; /* Adjust top position for name */
+        /* First Card (Right Aligned) */
+        #id-name, #id-title, #id-department {
+            right: 10%;
+            text-align: right;
+        }
+
+        /* Second Card (Left Aligned) */
+        #id-name-b, #id-title-b, #id-department-b {
+            left: 10%;
+            text-align: left;
+        }
+
+        /* Text Size */
+        #id-name { top: 29%; font-size: 14px; font-weight: lighter; }
+        #id-title { top: 35.7%; font-size: 10px; font-weight: bold; font-family: "roboto"; }
+        #id-department { top: 43%; font-size: 7px; font-weight: lighter; font-family: "roboto"; }
+
+        #id-name-b { top: 35.8%; font-size: 24px; font-weight: lighter; }
+        #id-title-b { top: 47%; font-size: 19.5px; font-weight: bold; font-family: "roboto"; }
+        #id-department-b { top: 58%; font-size: 10.5px; font-weight: lighter; font-family: "roboto"; }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            margin-top: 10px;
+            color: #0071e3;
             font-size: 14px;
-            font-weight: Lighter;
-        }
-
-        #id-title {
-            top: 35.7%; /* Adjust top position for job title */
-            font-size: 10px;
-            font-family: "roboto";
-            font-weight: bold;
-        }
-
-        #id-department {
-            top: 43%; /* Adjust top position for department */
-            font-family: "roboto";
-            font-size: 7px;
-            font-weight: lighter;
-        }
-
-
-
-
-
-
-        .id-card-b #id-name, #id-title, #id-department {
-            position: absolute;
-            left: 10%; /* Align text to the left */
-            transform: translateX(0); /* Ensure text is not centered */
-            color: white; 
-            
-        }
-
-        .id-card-b #id-name {
-            top: 29%; /* Adjust top position for name */
-            font-size: 14px;
-            font-weight: Lighter;
-        }
-
-        .id-card-b #id-title {
-            top: 35.7%; /* Adjust top position for job title */
-            font-size: 10px;
-            font-family: "roboto";
-            font-weight: bold;
-        }
-
-        .id-card-b #id-department {
-            top: 43%; /* Adjust top position for department */
-            font-family: "roboto";
-            font-size: 7px;
-            font-weight: lighter;
         }
 
     </style>
 </head>
 <body>
+    
     <div class="container">
-        <h2>SImulasikan Nama untuk Id Card anda</h2>
+        <h2>Simulasikan Nama untuk ID Card Anda</h2>
         
-        <!-- Form for users to input their name, job title, and department -->
-        <form id="id-card-form">
-            <label for="name">Nama Baris Pertama:</label><br>
-            <input type="text" id="name" name="name" placeholder="William" oninput="updateIDCard()"><br>
-
-            <label for="title">Nama Baris Kedua</label><br>
-            <input type="text" id="title" name="title" placeholder="Sudiono" oninput="updateIDCard()"><br>
-
-            <label for="department">Job Title (Jabatan)</label><br>
-            <input type="text" id="department" name="department" placeholder="Chief Executif Officer" oninput="updateIDCard()"><br>
-        </form>
-
-        <!-- The simulated ID Card -->
-        <div class="card-deck">   
-            <div class="id-card">
-                <img src="Asset-3sjgr-idcard.svg"/>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
-                    <!-- Background of the ID Card (using a rectangle for illustration) -->
-                    <rect width="100%" height="100%" rx="10" ry="15" fill="#090a0a"/>
-                </svg>
-                <!-- Display fields: Name, Job Title, and Department -->
-                <div id="id-name">William</div>
-                <div id="id-title">Sudiono</div>
-                <div id="id-department">Chief Operating Officer</div>
+        <form id="id-card-form" onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label for="name">Nama Baris Pertama:</label>
+                <input type="text" id="name" name="name" placeholder="William" required oninput="updateIDCard()">
             </div>
             
-            <div class="id-card-b">
-                <img src="sjgr-idcard-side-B.svg"/>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
-                    <!-- Background of the ID Card (using a rectangle for illustration) -->
-                    <rect width="100%" height="100%" rx="15" ry="15" fill="#090a0a"/>
-                </svg>
-                <!-- Display fields: Name, Job Title, and Department -->
-                <div id="id-name">William</div>
-                <div id="id-title">Sudiono</div>
-                <div id="id-department">Chief Operating Officer</div>
+            <div class="form-group">
+                <label for="title">Nama Baris Kedua:</label>
+                <input type="text" id="title" name="title" placeholder="Sudiyono" required oninput="updateIDCard()">
             </div>
-        </div> 
+            
+            <div class="form-group">
+                <label for="department">Job Title (Jabatan):</label>
+                <textarea id="department" name="department" placeholder="Chief Executive Officer" required oninput="updateIDCard()"></textarea>
+            </div>
+            
+            <div class="card-deck">   
+                <!-- First ID Card -->
+                <div class="id-card">
+                    <img src="Asset-3sjgr-idcard.svg"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
+                        <rect width="100%" height="100%" rx="10" ry="15" fill="#090a0a"/>
+                    </svg>
+                    <div id="id-name">William</div>
+                    <div id="id-title">Sudiyono</div>
+                    <div id="id-department">Chief Operating Officer</div>
+                </div>
+                
+                <!-- Second ID Card -->
+                <div class="id-card-b">
+                    <img src="sjgr-idcard-side-B-template.svg"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" class="id-card-background">
+                        <rect width="100%" height="100%" rx="15" ry="15" fill="#090a0a"/>
+                    </svg>
+                    <div id="id-name-b">William</div>
+                    <div id="id-title-b">Sudiyono</div>
+                    <div id="id-department-b">Chief Executive<br>Officer</div>
+                </div>
+            </div> 
+
+            <button type="submit">Submit</button>
+            <p id="loading" class="loading">Submitting your data...</p>
+
+        </form>
+        
+
+    
     </div>
 
     <script>
-        // Function to update the ID card with the name, job title, and department entered by the user
-        function updateIDCard() {
-            const name = document.getElementById('name').value;
-            const title = document.getElementById('title').value;
-            const department = document.getElementById('department').value;
 
-            const nameDisplay = document.getElementById('id-name');
-            const titleDisplay = document.getElementById('id-title');
-            const departmentDisplay = document.getElementById('id-department');
+            function updateIDCard() {
+                const name = document.getElementById('name').value.trim() || 'William';
+                const title = document.getElementById('title').value.trim() || 'Sudiyono';
+                const department = document.getElementById('department').value.trim() || 'Chief Executive Officer';
 
-            // Update the displayed fields, using default text if no input is given
-            nameDisplay.textContent = name.trim() !== '' ? name : 'William';
-            titleDisplay.textContent = title.trim() !== '' ? title : 'Sudiono';
-            departmentDisplay.textContent = department.trim() !== '' ? department : 'Job Title';
-        }
+                // First card (right-aligned)
+                document.getElementById('id-name').textContent = name;
+                document.getElementById('id-title').textContent = title;
+                document.getElementById('id-department').textContent = department;
+
+                // Second card (left-aligned)
+                document.getElementById('id-name-b').textContent = name;
+                document.getElementById('id-title-b').textContent = title;
+                document.getElementById('id-department-b').textContent = department;
+            }
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx1dbv3wYlC8NPsAa84v3HasQvHbIIQ-TlTsBFIqSamnizjcieFzVEk-lMuIpHiEu8/exec'; // Replace with your actual deployed URL
+
+            const form = document.forms['id-card-form'];
+            const submitButton = document.querySelector("button[type='submit']");
+            const loadingText = document.createElement("p");
+
+            // Create loading text and style it
+            loadingText.id = "loading";
+            loadingText.textContent = "Submitting your data...";
+            loadingText.style.display = "none";
+            loadingText.style.marginTop = "10px";
+            loadingText.style.color = "#0071e3";
+            loadingText.style.fontSize = "14px";
+
+            // Insert loading text after the submit button
+            submitButton.insertAdjacentElement("afterend", loadingText);
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); // Prevent page reload
+
+                // Disable button & show loading text
+                submitButton.disabled = true;
+                submitButton.textContent = "Submitting...";
+                loadingText.style.display = "block";
+
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                    .then((response) => response.json()) // Convert response to JSON
+                    .then((data) => {
+                        alert("Thank you! Your ID card data has been submitted. ✅");
+                        console.log("Success:", data);
+                        form.reset(); // Reset form fields
+                        updateIDCard(); // Reset ID card display
+                    })
+                    .catch((error) => {
+                        console.error("Error!", error.message);
+                        alert("Failed to submit data. ❌ Please try again.");
+                    })
+                    .finally(() => {
+                        // Re-enable button & hide loading text
+                        submitButton.disabled = false;
+                        submitButton.textContent = "Submit";
+                        loadingText.style.display = "none";
+                    });
+            });
+
+            // Ensure the ID card resets when the form is cleared
+            form.addEventListener("reset", updateIDCard);
+
     </script>
 </body>
 </html>

@@ -223,47 +223,70 @@
     </div>
 
     <script>
-        function updateIDCard() {
-            const name = document.getElementById('name').value.trim() || 'William';
-            const title = document.getElementById('title').value.trim() || 'Sudiyono';
-            const department = document.getElementById('department').value.trim() || 'Chief Executive Officer';
 
-            document.getElementById('id-name').textContent = name;
-            document.getElementById('id-title').textContent = title;
-            document.getElementById('id-department').textContent = department;
+            function updateIDCard() {
+                const name = document.getElementById('name').value.trim() || 'William';
+                const title = document.getElementById('title').value.trim() || 'Sudiyono';
+                const department = document.getElementById('department').value.trim() || 'Chief Executive Officer';
 
-            document.getElementById('id-name-b').textContent = name;
-            document.getElementById('id-title-b').textContent = title;
-            document.getElementById('id-department-b').textContent = department;
-        }
+                // First card (right-aligned)
+                document.getElementById('id-name').textContent = name;
+                document.getElementById('id-title').textContent = title;
+                document.getElementById('id-department').textContent = department;
 
-        // Ensure the ID card resets when the form is cleared
-        form.addEventListener("reset", updateIDCard);
+                // Second card (left-aligned)
+                document.getElementById('id-name-b').textContent = name;
+                document.getElementById('id-title-b').textContent = title;
+                document.getElementById('id-department-b').textContent = department;
+            }
 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx1dbv3wYlC8NPsAa84v3HasQvHbIIQ-TlTsBFIqSamnizjcieFzVEk-lMuIpHiEu8/exec'; // Replace with your actual deployed URL
 
+            const form = document.forms['id-card-form'];
+            const submitButton = document.querySelector("button[type='submit']");
+            const loadingText = document.createElement("p");
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbx1dbv3wYlC8NPsAa84v3HasQvHbIIQ-TlTsBFIqSamnizjcieFzVEk-lMuIpHiEu8/exec'; // Replace with your actual deployed URL
+            // Create loading text and style it
+            loadingText.id = "loading";
+            loadingText.textContent = "Submitting your data...";
+            loadingText.style.display = "none";
+            loadingText.style.marginTop = "10px";
+            loadingText.style.color = "#0071e3";
+            loadingText.style.fontSize = "14px";
 
-            const form = document.forms['id-card-form']; // Match the form name
+            // Insert loading text after the submit button
+            submitButton.insertAdjacentElement("afterend", loadingText);
 
             form.addEventListener('submit', (e) => {
-                e.preventDefault(); // Prevents page reload
+                e.preventDefault(); // Prevent page reload
+
+                // Disable button & show loading text
+                submitButton.disabled = true;
+                submitButton.textContent = "Submitting...";
+                loadingText.style.display = "block";
 
                 fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                     .then((response) => response.json()) // Convert response to JSON
                     .then((data) => {
                         alert("Thank you! Your ID card data has been submitted. ✅");
                         console.log("Success:", data);
-                        form.reset(); // Optional: Reset form fields
+                        form.reset(); // Reset form fields
+                        updateIDCard(); // Reset ID card display
                     })
                     .catch((error) => {
                         console.error("Error!", error.message);
-                        alert("Failed to submit data. ❌");
+                        alert("Failed to submit data. ❌ Please try again.");
+                    })
+                    .finally(() => {
+                        // Re-enable button & hide loading text
+                        submitButton.disabled = false;
+                        submitButton.textContent = "Submit";
+                        loadingText.style.display = "none";
                     });
             });
 
-
-
+            // Ensure the ID card resets when the form is cleared
+            form.addEventListener("reset", updateIDCard);
 
     </script>
 </body>
